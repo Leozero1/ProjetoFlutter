@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "227630799882",
+    "project_id": "roumeta-866a8",
+    "storage_bucket": "roumeta-866a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227630799882:android:7a06b8cdef4a9c55cd93f3",
+        "android_client_info": {
+          "package_name": "com.example.projeto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227630799882-jf88s36kdl6s2bk17048vtu4stbn9fv9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEPYEeR60jhpYsjZkdLgpkUgz4BrVVhd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227630799882-jf88s36kdl6s2bk17048vtu4stbn9fv9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
