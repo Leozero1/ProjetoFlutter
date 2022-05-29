@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto/pages/Configuracoes.dart';
 import 'package:projeto/pages/progresso.dart';
@@ -13,6 +15,7 @@ class ControleNavegacao extends StatefulWidget {
 
 class _ControleNavegacaoState extends State<ControleNavegacao> {
   final pageViewController = PageController();
+  var nomeUsuario;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +35,20 @@ class _ControleNavegacaoState extends State<ControleNavegacao> {
           actions: <Widget>[
             Row(
               children: [
-                Text(
-                  '',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
+                FutureBuilder(
+                future: retornarUsuarioLogado(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    //return const Text(''); 
+                    return const Expanded(child: CircularProgressIndicator());
+                  } else {
+                    return Text(
+                      nomeUsuario ?? '',
+                      style: const TextStyle(fontSize: 15),
+                    );
+                  }
+                },
+              ),
                 IconButton(
                   padding: const EdgeInsets.only(
                     right: 25,
@@ -89,5 +102,20 @@ class _ControleNavegacaoState extends State<ControleNavegacao> {
             );
           }),
     );
+  }
+
+  retornarUsuarioLogado() async {
+    var uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('usuarios')
+        .where('uid', isEqualTo: uid)
+        .get()
+        .then((q) {
+      if (q.docs.isNotEmpty) {
+        nomeUsuario = q.docs[0].data()['nome'];
+      } else {
+        nomeUsuario = "NENHUM";
+      }
+    });
   }
 }

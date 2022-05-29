@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projeto/pages/widgets/mensagem.dart';
+
 
 class Cadastro extends StatefulWidget {
   const Cadastro({Key? key}) : super(key: key);
@@ -151,6 +153,15 @@ class _CadastroState extends State<Cadastro> {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: senha)
         .then((res) {
+
+        FirebaseFirestore.instance.collection('usuarios')
+          .add(
+            {
+              "uid" : res.user!.uid.toString(),
+              "nome" : nome,
+            }
+          );
+
       sucesso(context, 'Usuário criado com sucesso.');
       Navigator.pop(context);
     }).catchError((e) {

@@ -31,7 +31,9 @@ class _CriarRotinaState extends State<CriarRotina> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(10, 186, 84, 1),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
