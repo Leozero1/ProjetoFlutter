@@ -30,25 +30,25 @@ class _ControleNavegacaoState extends State<ControleNavegacao> {
         ],
       ),
       appBar: AppBar(
-        backwardsCompatibility: mounted,
+          automaticallyImplyLeading: false,
           backgroundColor: Color.fromRGBO(10, 186, 84, 1),
           actions: <Widget>[
             Row(
               children: [
                 FutureBuilder(
-                future: retornarUsuarioLogado(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    //return const Text(''); 
-                    return const Expanded(child: CircularProgressIndicator());
-                  } else {
-                    return Text(
-                      nomeUsuario ?? '',
-                      style: const TextStyle(fontSize: 15),
-                    );
-                  }
-                },
-              ),
+                  future: retornarUsuarioLogado(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      //return const Text('');
+                      return const Expanded(child: CircularProgressIndicator());
+                    } else {
+                      return Text(
+                        nomeUsuario ?? '',
+                        style: const TextStyle(fontSize: 15),
+                      );
+                    }
+                  },
+                ),
                 IconButton(
                   padding: const EdgeInsets.only(
                     right: 25,
@@ -103,6 +103,7 @@ class _ControleNavegacaoState extends State<ControleNavegacao> {
           }),
     );
   }
+  
 
   retornarUsuarioLogado() async {
     var uid = FirebaseAuth.instance.currentUser!.uid;
