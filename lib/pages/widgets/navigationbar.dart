@@ -5,6 +5,7 @@ import 'package:projeto/pages/Configuracoes.dart';
 import 'package:projeto/pages/progresso.dart';
 import 'package:projeto/pages/rotinas.dart';
 import 'package:projeto/pages/sobre.dart';
+import 'package:projeto/pages/widgets/mensagem.dart';
 
 class ControleNavegacao extends StatefulWidget {
   const ControleNavegacao({Key? key}) : super(key: key);

@@ -12,10 +12,8 @@ class Rotinas extends StatefulWidget {
 }
 
 class _RotinasState extends State<Rotinas> {
-  String email = '';
-  String nome = '';
-  String senha = '';
   var rotinas;
+  var progresso;
 
   @override
   void initState() {
@@ -23,6 +21,7 @@ class _RotinasState extends State<Rotinas> {
     rotinas = FirebaseFirestore.instance
         .collection('rotinas')
         .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid);
+    
   }
 
   @override
@@ -32,10 +31,6 @@ class _RotinasState extends State<Rotinas> {
           backgroundColor: Color.fromRGBO(10, 186, 84, 1),
           child: Icon(Icons.add),
           onPressed: (() => Navigator.pushNamed(context, '/CriarRotina'))),
-
-
-
-
       body: Container(
         padding: const EdgeInsets.all(15),
         //
@@ -61,12 +56,7 @@ class _RotinasState extends State<Rotinas> {
             }
           },
         ),
-      ),      
-
-
-
-
-
+      ),
     );
   }
 
@@ -77,118 +67,132 @@ class _RotinasState extends State<Rotinas> {
     TimeOfDay _horaInicio = firebaseToTimeOfDay(item.data()['horaInicio']);
     TimeOfDay _horafim = firebaseToTimeOfDay(item.data()['horaFim']);
     String diasDaSemana = (item.data()['diasDaSemana']);
-    
-    
-    return Column(children: [
-        // Container titulo da rotina
-        Container(
-          padding: const EdgeInsets.all(10.0),
-          color: Color.fromRGBO(10, 186, 84, 1),
-          alignment: Alignment.topCenter,
-          child: Text(
-            nomeRotina,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-        ),
-    
-        Container(
-          padding: EdgeInsets.all(10),
-          color: Colors.grey.shade200,
-          alignment: Alignment.center,
-          // Texto onde ficara o periodo da rotina
-          child: Text(
-            //Separando o TimeOfDay em horas e minutos
-            _horaInicio.hour.toString().padLeft(2,'0') + ':' + _horaInicio.minute.toString().padLeft(2,'0')
-            + ' até ' + 
-            _horafim.hour.toString().padLeft(2,'0') + ':' + _horafim.minute.toString().padLeft(2,'0'),
-            style: TextStyle(fontSize: 16, color: Color.fromRGBO(10, 186, 84, 1)),
-          ),
-        ),
 
-        Container(
-          padding: EdgeInsets.all(10),
-          color: Colors.grey.shade200,
-          alignment: Alignment.center,
-          // Texto onde ficara o periodo da rotina
-          child: Text(
-            //Separando o TimeOfDay em horas e minutos
-            diasDaSemana,
-            style: TextStyle(fontSize: 16, color: Color.fromRGBO(10, 186, 84, 1)),
+    return Column(children: [
+      // Container titulo da rotina
+      Container(
+        padding: const EdgeInsets.all(10.0),
+        color: Color.fromRGBO(10, 186, 84, 1),
+        alignment: Alignment.topCenter,
+        child: Text(
+          nomeRotina,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
           ),
         ),
-    
-        Container(
-          padding: const EdgeInsets.all(20),
-          color: Colors.grey.shade200,
-          alignment: Alignment.center,
-          child: Text(
-            meta,
-            style: TextStyle(
-              fontSize: 18,
-              color: Color.fromRGBO(10, 186, 84, 1),
-            ),
+      ),
+
+      Container(
+        padding: EdgeInsets.all(10),
+        color: Colors.grey.shade200,
+        alignment: Alignment.center,
+        // Texto onde ficara o periodo da rotina
+        child: Text(
+          //Separando o TimeOfDay em horas e minutos
+          _horaInicio.hour.toString().padLeft(2, '0') +
+              ':' +
+              _horaInicio.minute.toString().padLeft(2, '0') +
+              ' até ' +
+              _horafim.hour.toString().padLeft(2, '0') +
+              ':' +
+              _horafim.minute.toString().padLeft(2, '0'),
+          style: TextStyle(fontSize: 16, color: Color.fromRGBO(10, 186, 84, 1)),
+        ),
+      ),
+
+      Container(
+        padding: EdgeInsets.all(10),
+        color: Colors.grey.shade200,
+        alignment: Alignment.center,
+        // Texto onde ficara o periodo da rotina
+        child: Text(
+          //Separando o TimeOfDay em horas e minutos
+          diasDaSemana,
+          style: TextStyle(fontSize: 16, color: Color.fromRGBO(10, 186, 84, 1)),
+        ),
+      ),
+
+      Container(
+        padding: const EdgeInsets.all(20),
+        color: Colors.grey.shade200,
+        alignment: Alignment.center,
+        child: Text(
+          meta,
+          style: TextStyle(
+            fontSize: 18,
+            color: Color.fromRGBO(10, 186, 84, 1),
           ),
         ),
-    
-        Container(
-          padding: const EdgeInsets.all(5),
-          color: Colors.grey.shade200,
-          alignment: Alignment.bottomRight,
-          // Texto de até quando esta rotina será aplicada.
-          child: Text(
-            //Formatando a data para o modelo brasileiro e com apenas o dia, mês e ano
-            'até ' +
-            dtvalidade.day.toString().padLeft(2,'0') + '/' + dtvalidade.month.toString().padLeft(2,'0')
-            + '/' + dtvalidade.year.toString(),
-            style: TextStyle(fontSize: 16, color: Color.fromRGBO(10, 186, 84, 1)),
-          ),
+      ),
+
+      Container(
+        padding: const EdgeInsets.all(5),
+        color: Colors.grey.shade200,
+        alignment: Alignment.bottomRight,
+        // Texto de até quando esta rotina será aplicada.
+        child: Text(
+          //Formatando a data para o modelo brasileiro e com apenas o dia, mês e ano
+          'até ' +
+              dtvalidade.day.toString().padLeft(2, '0') +
+              '/' +
+              dtvalidade.month.toString().padLeft(2, '0') +
+              '/' +
+              dtvalidade.year.toString(),
+          style: TextStyle(fontSize: 16, color: Color.fromRGBO(10, 186, 84, 1)),
         ),
-    
-        Container(
-          color: const Color.fromRGBO(10, 186, 84, 1),
-          padding: const EdgeInsets.all(10),
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
+      ),
+
+      Container(
+        color: const Color.fromRGBO(10, 186, 84, 1),
+        padding: const EdgeInsets.all(10),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromRGBO(10, 186, 84, 1),
                 ),
                 child: Text('Alterar'),
-                onPressed: (){
+                onPressed: () {
                   Navigator.pushNamed(
                     context,
                     '/CriarRotina',
-                    arguments: item.id,);
-                  
-                }
-              ),
-
-              ElevatedButton(
+                    arguments: item.id,
+                  );
+                }),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromRGBO(10, 186, 84, 1),
+                ),
+                onPressed: () {
+                  showAlertDialog(context);
+                },
+                child: Text('Realizou ?')),
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromRGBO(10, 186, 84, 1),
                 ),
                 child: Text('Excluir'),
-                onPressed: (){
-                  FirebaseFirestore.instance.collection('rotinas').doc(item.id).delete();
+                onPressed: () {
+                  FirebaseFirestore.instance
+                      .collection('rotinas')
+                      .doc(item.id)
+                      .delete();
 
                   sucesso(context, 'Item removido com sucesso.');
-                }
-              ),
-            ],
-          ),
-        
+                }),
+          ],
         ),
-        SizedBox(height: 20,)
-      ]);
+      ),
+      SizedBox(
+        height: 20,
+      )
+    ]);
   }
-   TimeOfDay firebaseToTimeOfDay(Map data) {
-    return TimeOfDay(
-      hour: data['hour'], 
-      minute: data['minute']);
+
+  TimeOfDay firebaseToTimeOfDay(Map data) {
+    return TimeOfDay(hour: data['hour'], minute: data['minute']);
   }
 }

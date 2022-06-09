@@ -74,6 +74,7 @@ class _DefinirDiasState extends State<DefinirDias> {
               "horaFim": timeOfDayToFirebase(_horafim),
               "diasDaSemana": listaDeDias,
             });
+
             sucesso(context, 'Item adicionado com sucesso.');
           } else {
             listaDeDias = listToString();
